@@ -1,4 +1,4 @@
-# Project Name
+# Rails Makefile Docker
 
 This project provides a set of commands to simplify common development tasks. It utilizes Docker and Ruby to create and manage Ruby on Rails projects. The root folder contains the `.bundle` directory, which is shared among all projects created within the folder. The project is designed to be run on Linux or macOS systems with Docker installed.
 
