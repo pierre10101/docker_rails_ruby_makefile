@@ -34,7 +34,7 @@ install:
 	@if [ -z "$(app)" ]; then \
 		echo "Please provide a project name (app=<project_name>)"; \
 	else \
-		mkdir $(app) && docker run -it -u $(id -u):$(id -g) -v "$(shell pwd)/${app}":/app --rm ruby:latest bin/bash -c "curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt install -y nodejs && npm i -g yarn && cd app && gem install rails && rails new . ${args}"; \
+		mkdir $(app) && docker run -it -v "$(shell pwd)/${app}":/app --rm -e HOME=/app -w /app ruby:latest bash -c "gem install rails && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt install -y nodejs && npm i -g yarn && rails new . ${args} && chown -R $(shell id -u):$(shell id -g) ."; \
 	fi
 irb: 
 	docker run -u $(id -u):$(id -g) -it --rm -e HOME=/app -w /app ruby:latest
