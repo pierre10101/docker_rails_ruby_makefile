@@ -21,7 +21,7 @@ dev-shell:
 	@if [ -z "$(app)" ]; then \
 		echo "Please provide a project name (app=<project_name>)"; \
 	else \
-		docker run -u $(id -u):$(id -g) -it --rm -v "${shell pwd}/.bundle:/usr/local/bundle" -v "$(shell pwd)/${app}":/app -e HOME=/app -w /app ruby:latest /bin/bash -c "curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt install -y nodejs && npm i -g yarn && bash"; \
+		docker run -p 3000:5000 -u $(id -u):$(id -g) -it --rm -v "${shell pwd}/.bundle:/usr/local/bundle" -v "$(shell pwd)/${app}":/app -e HOME=/app -w /app ruby:latest /bin/bash -c "curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt install -y nodejs && npm install -g npm@latest && npm i -g yarn && bash"; \
 	fi
 dev-server: 
 	@if [ -z "$(app)" ]; then \
@@ -34,7 +34,7 @@ install:
 	@if [ -z "$(app)" ]; then \
 		echo "Please provide a project name (app=<project_name>)"; \
 	else \
-		mkdir $(app) && docker run -it -v "$(shell pwd)/${app}":/app --rm -e HOME=/app -w /app ruby:latest bash -c "gem install rails && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt install -y nodejs && npm i -g yarn && rails new . ${args} && chown -R $(shell id -u):$(shell id -g) ."; \
+		mkdir $(app) && docker run -it -v "$(shell pwd)/${app}":/app --rm -e HOME=/app -w /app ruby:latest bash -c "gem install rails && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt install -y nodejs && npm install -g npm@latest && npm i -g yarn && rails new . ${args} && chown -R $(shell id -u):$(shell id -g) ."; \
 	fi
 irb: 
 	docker run -u $(id -u):$(id -g) -it --rm -e HOME=/app -w /app ruby:latest
